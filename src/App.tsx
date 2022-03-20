@@ -1,12 +1,14 @@
 import Square from "./components/Square"
 import { useState,useEffect } from "react"
 import{parrens} from "./parrens"
+import Header from "./components/Header"
+import Result from "./components/Result"
 const App = () => {
 
   const [player,setplayer]=useState<string>("X")
   const [bord, setbord] = useState<any>(["","","","","","","","",""])
   const [result, setwinner] = useState<any>({winner:"none",state:"none"})
-
+  const [message,setmessage] = useState<any>('')
   useEffect(() => {
     checkWin();
     checkIfTie();
@@ -20,7 +22,7 @@ const App = () => {
 
     useEffect(() => {
     if (result.state != "none") {
-      alert(`Game Finished! Winning Player: ${result.winner}`);
+      setmessage(`Game Finished! Winning Player: ${result.winner}`);
       setbord(["","","","","","","","",""]);
       restartGame();
     }
@@ -76,8 +78,11 @@ const  checkIfTie=()=>{
   
   
   return (
+    <div className='space-y-2 '>
+       <Header />
    <div className="flex align-center w-full h-full justify-center">
-     <div className="bg-blue-400 flex flex-col w-[500px] h-[500px] border-[1px]">
+  
+     <div className=" flex flex-col w-[400px] h-[400px] mt-6 border-[1px]">
     
     <div className="flex-row flex flex-[33%]">
     <Square value={bord[0]} click={()=>change(0)}/>
@@ -90,15 +95,17 @@ const  checkIfTie=()=>{
         <Square value={bord[5]} click={()=>change(5)}/>
     </div>
 
-      <div className="flex-row flex flex-[33%]">
+<div className="flex-row flex flex-[33%]">
     <Square value={bord[6]} click={()=>change(6)}/>
       <Square value={bord[7]} click={()=>change(7)}/>
         <Square value={bord[8]} click={()=>change(8)}/>
-    </div>
+  </div>
    
 
     
      </div>
+    </div>
+  <Result results={message} />
     </div>
   )
 }
